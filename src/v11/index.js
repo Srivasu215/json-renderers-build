@@ -57,14 +57,11 @@ const render = ({
         showLog
     });
 
-    if (specJson.showLog) console.log("json-renderers-build specJson:", specJson);
-
     // 2. Select the renderer
     const renderer = RENDERER_MAP[specJson.type];
     if (!renderer) {
         throw new Error(`Renderer for type "${specJson.type}" not found.`);
-    }
-
+    };
     // 3. Build and return the component spec
     const createdRenderer = renderer({
         inColumns: specJson.columns,

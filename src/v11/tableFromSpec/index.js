@@ -1,7 +1,4 @@
-import renderTable from "./table/index.js";
-
-import applyOptions from "./options/index.js";
-import renderRequests from "./render-requests.json" with { type: "json" };
+import buildSpec from "./buildSpec/index.js";
 
 const render = ({
     inData,
@@ -9,24 +6,13 @@ const render = ({
     footer = [],
     options
 } = {}) => {
-    const spec = renderTable({
-        inColumns,
-        inData,
-        inFooter: footer
+
+    const spec = buildSpec({
+        columns: inColumns,
+        data: inData
     });
 
-    if (options) {
-        return applyOptions(spec, options);
-    };
-
     return spec;
-};
-
-render.requests = renderRequests;
-
-export {
-    render,
-    renderRequests
 };
 
 export default render;
