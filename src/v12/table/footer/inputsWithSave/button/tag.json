@@ -1,0 +1,8 @@
+{
+  "tagName": "button",
+  "attributes": {
+    "type": "button",
+    "class": "btn btn-primary btn-sm ms-2"
+  },
+  "textContent": "Save"
+}

@@ -1,0 +1,107 @@
+{
+  "table": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {}
+  },
+  "tableWithSerial": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {
+      "showSerial": true
+    }
+  },
+  "tableWithDefaultAction": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {
+      "showOptions": true
+    }
+  },
+  "tableWithCustomActions": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {
+      "showOptions": [
+        { "label": "Show", "type": "button" },
+        { "label": "Edit", "type": "button" }
+      ]
+    }
+  },
+  "tableWithSerialAndActions": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {
+      "showSerial": true,
+      "showOptions": [
+        { "label": "Show", "type": "button" }
+      ]
+    }
+  },
+  "tableWithFooter": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "footer": ["inputs"],
+    "options": {}
+  },
+  "tableWithFooterSave": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "footer": ["inputsWithSave"],
+    "options": {}
+  },
+  "tableWithTotals": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "2" },
+      { "itemName": "0.11-25", "baseUnit": "3" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "footer": ["totals"],
+    "options": {}
+  },
+  "tableWithMultipleFooters": {
+    "type": "table",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "2" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "footer": ["inputs", "totals", "inputsWithSave", "empty"],
+    "options": {}
+  },
+  "tableHead": {
+    "type": "tableHead",
+    "data": [],
+    "columns": ["itemName", "baseUnit"],
+    "options": {}
+  },
+  "tableBody": {
+    "type": "tableBody",
+    "data": [
+      { "itemName": "0.09/30mm", "baseUnit": "kgs" }
+    ],
+    "columns": ["itemName", "baseUnit"],
+    "options": {}
+  }
+}
