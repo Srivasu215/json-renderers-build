@@ -1,0 +1,9 @@
+{
+  "tagName": "input",
+  "attributes": {
+    "type": "text",
+    "name": "",
+    "placeholder": "",
+    "class": "form-control form-control-sm"
+  }
+}
