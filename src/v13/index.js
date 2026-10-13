@@ -2,7 +2,9 @@ import registerGlobal from "./registerGlobal.js";
 import guardFunc from "./guard.js";
 
 import renderTable from "./table/index.js";
-import renderSelect, { renderSelectOptions, renderDataList } from "./select/index.js";
+import renderSelect from "./select/index.js";
+import renderSelectOptions from "./selectOptionsOnly/index.js";
+import renderDataList from "./dataList/index.js";
 
 const RENDERER_MAP = {
     table: renderTable,
