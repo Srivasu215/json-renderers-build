@@ -45,7 +45,7 @@
     crossorigin="anonymous"></script>
 
   <script type="module">
-    import "../../docs/dist/v15/min.js";
+    import "../../docs/dist/v16/min.js";
     import "https://keshavsoft.github.io/json-to-tag/dist/v9/min.js";
     import data from "./batches.json" with { type: "json" };
 
@@ -59,13 +59,34 @@
       try {
         const spec = window.ks.jsonRenderersBuild.renderToDom({
           type: "table",
-          columns: [{ columnName: "itemName" }, { columnName: "baseUnit" }],
+          columns: [{
+            columnName: "itemName", width: "300px", template: {
+              bodyCell: "buildBodyCell"
+            }
+          },
+          {
+            columnName: "baseUnit", width: "200px", template: {
+              bodyCell: "buildBodyCell"
+            }
+          },
+          {
+            columnName: "batches", width: "100px", template: {
+              bodyCell: "buttonCell"
+            }
+          }
+          ],
           data,
+          serial: {
+            col: { width: "50px" },
+            header: { columnName: "#" },
+            body: {},
+            footer: {}
+          },
           options: {
-            showSerial: true,
-            showOptions: [{ label: "show", type: "button" }],
-            showFooter: true,
-            showFooterSave: true
+            col: { width: "100px" },
+            header: { columnName: "options" },
+            body: { columnName: "show" },
+            footer: { columnName: "save" }
           }
         });
 

@@ -45,7 +45,7 @@ const startFunc = data => {
 
     runInstructions(columnInstructions);
 
-    buildBody(findByRole(base, "table-body").children, data, spec.buildBodyCell);
+    buildBody(findByRole(base, "table-body").children, data, spec);
 
     insertSerial(base, spec);
     insertOptions(base, spec);
