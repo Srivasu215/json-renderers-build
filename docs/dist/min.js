@@ -1,24 +1,24 @@
-const B = {
+const R = {
   version: "1.15.0",
   name: "json-renderers-build"
-}, E = (e) => {
+}, B = (e) => {
   const t = e;
   if (typeof globalThis > "u" || !t) return;
   globalThis.ks ?? (globalThis.ks = {});
   const o = typeof t == "function" ? t : t.render, n = typeof t == "object" ? t.getSpec : void 0;
   globalThis.ks.jsonRenderersBuild = {
-    meta: B,
+    meta: R,
     renderToDom: o,
     render: o,
     ...n ? { getSpec: n } : {},
     ...typeof t == "object" ? t : {}
   };
-}, y = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist"], A = ["table", "tableFromSpec"], F = ({ inConfig: e } = {}) => {
+}, w = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist"], A = ["table", "tableFromSpec"], P = ({ inConfig: e } = {}) => {
   const t = e;
   if (!t || typeof t != "object")
     throw console.error("Config must be an object"), new TypeError("Config must be an object");
-  if (typeof t.type != "string" || !y.includes(t.type))
-    throw console.error(`type must be one of: ${y.join(", ")}`), new Error(`type must be one of: ${y.join(", ")}`);
+  if (typeof t.type != "string" || !w.includes(t.type))
+    throw console.error(`type must be one of: ${w.join(", ")}`), new Error(`type must be one of: ${w.join(", ")}`);
   if (t.showLog !== void 0 && typeof t.showLog != "boolean")
     throw console.error("showLog must be a boolean"), new TypeError("showLog must be a boolean");
   if (!Array.isArray(t.data))
@@ -47,12 +47,12 @@ const B = {
     }
   }
   return !0;
-}, D = "table", G = [], K = [], H = {}, I = !1, i = {
+}, D = "table", G = [], I = [], K = {}, H = !1, i = {
   type: D,
   columns: G,
-  data: K,
-  options: H,
-  showLog: I
+  data: I,
+  options: K,
+  showLog: H
 }, V = [
   {
     columnName: "Name",
@@ -70,53 +70,57 @@ const B = {
 ], v = {
   columns: V,
   data: k
-}, c = {
+}, u = {
   ...i,
   ...v
-}, p = ({
-  type: e = c.type,
-  data: t = c.data,
-  columns: o = c.columns,
-  options: n = c.options,
-  showLog: l = c.showLog
+}, C = ({
+  type: e = u.type,
+  data: t = u.data,
+  columns: o = u.columns,
+  options: n = u.options,
+  showLog: l = u.showLog
 } = {}) => {
-  const s = {
+  const a = {
     type: e,
     data: t,
     columns: o,
     options: n,
     showLog: l
   };
-  return F({ inConfig: s }), s;
+  return P({ inConfig: a }), a;
 };
-Object.assign(p, c);
-p.toJSON = () => structuredClone(c);
+Object.assign(C, u);
+C.toJSON = () => structuredClone(u);
 const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e, t) => {
   if (!M(e)) return;
   let o = {};
   for (const [n, l] of Object.entries(e))
-    o[n] = w(l, t);
+    o[n] = N(l, t);
   return o;
 }, J = (e, t) => {
   const o = structuredClone(e);
-  return Array.isArray(o) ? o.map((l) => w(l, t)) : void 0;
-}, L = (e, t) => e.replace(/\$\{(\w+)\}/g, (o, n) => t[n] !== void 0 ? t[n] : o), Y = (e, t) => L(e, t), w = (e, t) => {
+  return Array.isArray(o) ? o.map((l) => N(l, t)) : void 0;
+}, x = (e, t) => e.replace(/\$\{(\w+)\}/g, (o, n) => t[n] !== void 0 ? t[n] : o), Y = (e, t) => x(e, t), N = (e, t) => {
   const o = structuredClone(e);
-  return typeof o == "string" ? L(o, t) : (o === null || typeof o != "object" || ("textContent" in o && (o.textContent = Y(o == null ? void 0 : o.textContent, t)), "attributes" in o && (o.attributes = _(o == null ? void 0 : o.attributes, t)), "children" in o && (o.children = J(o == null ? void 0 : o.children, t))), o);
-}, m = (e, t) => {
+  return typeof o == "string" ? x(o, t) : (o === null || typeof o != "object" || ("textContent" in o && (o.textContent = Y(o == null ? void 0 : o.textContent, t)), "attributes" in o && (o.attributes = _(o == null ? void 0 : o.attributes, t)), "children" in o && (o.children = J(o == null ? void 0 : o.children, t))), o);
+}, y = (e, t) => {
   const o = e, n = t;
-  return o.map((l) => w(n, l));
-}, P = (e, t, o) => {
+  return o.map((l) => N(n, l));
+}, O = (e, t, o) => {
   const n = o, l = t;
   let r = [];
-  return n.map((u) => {
-    let d = structuredClone(e);
-    d.textContent = l[u.columnName], r.push(d);
+  return n.forEach((s) => {
+    var h;
+    const d = e[(h = s == null ? void 0 : s.template) == null ? void 0 : h.bodyCell];
+    if (d) {
+      let m = structuredClone(d);
+      m.textContent = l[s.columnName], r.push(m);
+    }
   }), r;
-}, x = (e, t, o) => {
+}, E = (e, t, o) => {
   e.forEach((n, l) => {
-    const r = t == null ? void 0 : t.data[l], u = P(o, r, t == null ? void 0 : t.columns);
-    n.children = u;
+    const r = t == null ? void 0 : t.data[l], s = O(o, r, t == null ? void 0 : t.columns);
+    n.children = s;
   });
 }, q = (e, t) => {
   const o = structuredClone(t);
@@ -150,16 +154,16 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
   o.textContent = "save", e.push(o);
 }, tt = (e, t) => {
   X(e == null ? void 0 : e.children[0].children, t == null ? void 0 : t.buildColGroup), Z(e == null ? void 0 : e.children[1].children[0].children, t == null ? void 0 : t.buildHeader), S(e == null ? void 0 : e.children[2].children, t == null ? void 0 : t.button), T(e == null ? void 0 : e.children[3].children[0].children, t == null ? void 0 : t.button);
-}, f = (e, t) => {
+}, p = (e, t) => {
   var o;
   if (((o = e == null ? void 0 : e.attributes) == null ? void 0 : o["data-role"]) === t) return e;
   for (const n of (e == null ? void 0 : e.children) ?? []) {
-    const l = f(n, t);
+    const l = p(n, t);
     if (l) return l;
   }
   return null;
 }, ot = (e, t) => {
-  const o = e[t.fileName], n = t.dataRole ? f(o, t.dataRole) : o;
+  const o = e[t.fileName], n = t.dataRole ? p(o, t.dataRole) : o;
   return (t.filePath ?? []).reduce((l, r) => l[r], n);
 }, et = {
   tagName: "tr",
@@ -221,7 +225,7 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     "data-name": "${columnName}"
   },
   children: []
-}, a = {
+}, c = {
   buildBodyTr: et,
   buildColGroup: nt,
   buildHeader: lt,
@@ -357,19 +361,19 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     templateKey: "buildBodyTr",
     func: "fromCollection"
   }
-], h = { data: {}, base: b, spec: a }, yt = { fromCollection: m, tableBody: P, buildBody: x }, pt = (e, t) => {
-  const o = e.dataRole ? f(h[e.fileName], e.dataRole) : h[e.fileName], n = [...e.filePath ?? []], l = n.pop(), r = n.reduce((u, d) => u[d], o);
+], f = { data: {}, base: b, spec: c }, yt = { fromCollection: y, tableBody: O, buildBody: E }, pt = (e, t) => {
+  const o = e.dataRole ? p(f[e.fileName], e.dataRole) : f[e.fileName], n = [...e.filePath ?? []], l = n.pop(), r = n.reduce((s, d) => s[d], o);
   r[l] = t;
-}, g = (e) => {
+}, j = (e) => {
   e.forEach((t) => {
-    const o = ot(h, t.sourcePath);
+    const o = ot(f, t.sourcePath);
     if (o) {
-      const n = yt[t.func](o, a[t.templateKey]);
+      const n = yt[t.func](o, c[t.templateKey]);
       pt(t.destinationPath, n);
     } else
       console.log("   !instruction : ", t), console.log("   !source : ", o);
   });
-}, wt = (e) => (h.data = e, g(ft), g(mt), x(f(b, "table-body").children, e, a.buildBodyCell), W(b, a), tt(b, a), b), $ = ({
+}, wt = (e) => (f.data = e, j(ft), j(mt), E(p(b, "table-body").children, e, c.buildBodyCell), W(b, c), tt(b, c), b), F = ({
   inData: e,
   inColumns: t,
   footer: o = [],
@@ -380,25 +384,25 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
 }), Ct = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (n) => typeof n == "object" && n !== null ? n : { rowValue: n }
-  ), o = structuredClone(a.buildSelect);
-  return o.children = m(t, a.buildOption), o;
+  ), o = structuredClone(c.buildSelect);
+  return o.children = y(t, c.buildOption), o;
 }, Nt = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (o) => typeof o == "object" && o !== null ? o : { rowValue: o }
   );
-  return m(t, a.buildOption);
-}, j = ({ inData: e = [] } = {}) => {
+  return y(t, c.buildOption);
+}, L = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (n) => typeof n == "object" && n !== null ? n : { rowValue: n }
-  ), o = structuredClone(a.buildDataList);
-  return o.children = m(t, a.buildOption), o;
+  ), o = structuredClone(c.buildDataList);
+  return o.children = y(t, c.buildOption), o;
 }, gt = {
-  table: $,
-  tableFromSpec: $,
+  table: F,
+  tableFromSpec: F,
   select: Ct,
   selectOptionsOnly: Nt,
-  dataList: j,
-  datalist: j
+  dataList: L,
+  datalist: L
 }, $t = ({
   type: e = i.type,
   data: t = i.data,
@@ -406,28 +410,28 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
   options: n = i.options,
   showLog: l = i.showLog
 } = {}) => {
-  const s = {
+  const a = {
     type: e,
     data: t,
     columns: o,
     options: n,
     showLog: l
   };
-  F({ inConfig: s });
-  const C = gt[s.type];
-  if (!C)
-    throw new Error(`Renderer for type "${s.type}" not found.`);
-  const N = C({
-    inColumns: s.columns,
-    inData: s.data,
-    options: s.options
+  P({ inConfig: a });
+  const g = gt[a.type];
+  if (!g)
+    throw new Error(`Renderer for type "${a.type}" not found.`);
+  const $ = g({
+    inColumns: a.columns,
+    inData: a.data,
+    options: a.options
   });
-  return s.showLog && console.log("json-renderers-build output:", N), N;
+  return a.showLog && console.log("json-renderers-build output:", $), $;
 };
-E({ render: $t, getSpec: p, spec: c });
+B({ render: $t, getSpec: C, spec: u });
 export {
   $t as default,
-  p as getSpec,
+  C as getSpec,
   $t as render,
-  c as spec
+  u as spec
 };

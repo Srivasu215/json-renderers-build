@@ -1,6 +1,6 @@
 {
   "name": "json-renderers-build",
-  "version": "1.15.2",
+  "version": "1.15.3",
   "description": "Headless component specification builder for json-renderers, compiling UI skeletons and data into JSON-to-DOM specs using json-to-spec",
   "type": "module",
   "main": "src/index.js",
@@ -42,6 +42,6 @@
   },
   "dependencies": {
     "json-to-spec": "^32.1.3",
-    "json-transformer-funcs": "^1.16.1"
+    "json-transformer-funcs": "^1.17.1"
   }
 }
