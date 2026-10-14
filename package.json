@@ -1,6 +1,6 @@
 {
   "name": "json-renderers-build",
-  "version": "1.13.2",
+  "version": "1.14.1",
   "description": "Headless component specification builder for json-renderers, compiling UI skeletons and data into JSON-to-DOM specs using json-to-spec",
   "type": "module",
   "main": "src/index.js",

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>V3 Table Spec Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+  <main class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h1 style="font-size:1.5rem" class="mb-1">V3 Table Spec Test</h1>
+        <p class="text-muted small mb-0">Renders table specification built by <code>src/v3</code> with
+          <code>json-to-tag</code> CDN
+        </p>
+      </div>
+    </div>
+    <div id="dom-render-container" class="card shadow-sm p-3">
+      <div class="text-center py-4 text-muted">Building and rendering table...</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import "../../docs/dist/v9/min.js";
+    import "https://keshavsoft.github.io/json-to-tag/dist/v9/min.js";
+
+    const container = document.getElementById("dom-render-container");
+
+    const start = async () => {
+      try {
+        let data = [
+          { itemName: "0.09/30mm", baseUnit: "kgs" },
+          { itemName: "0.11-25", baseUnit: "kgs" },
+          { itemName: "0.11-30", baseUnit: "kgs" },
+          { itemName: "0.11/32mm", baseUnit: "kgs" },
+          { itemName: "0.11/35mm", baseUnit: "kgs" }
+        ];
+
+        const spec = window.ks.jsonRenderersBuild.renderToDom({
+          type: "table",
+          columns: ["itemName", "baseUnit"],
+          data,
+          options: {
+            showSerial: true,
+            showOptions: [{ label: "show", type: "button" }],
+            showFooter: true,
+            showFooterSave: true
+          }
+        });
+        console.log("spec : ", spec);
+        window.ks.jsonToTag.buildSpecElement(spec, "dom-render-container");
+        // console.log("spec : ", spec);
+      } catch (err) {
+        console.error("Render error:", err);
+        container.innerHTML = `<div class="alert alert-danger font-monospace small mb-0">${err.message}</div>`;
+      }
+    };
+
+    // console.log("k1 : ", renderRequests);
+
+    start();
+  </script>
+</body>
+
+</html>
