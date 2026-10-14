@@ -1,5 +1,5 @@
 import registerGlobal from "./registerGlobal.js";
-import guardFunc from "./guard.js";
+import getSpec from "./getSpec.js";
 
 import renderTable from "./table/index.js";
 import renderSelect from "./select/index.js";
@@ -13,34 +13,6 @@ const RENDERER_MAP = {
     selectOptionsOnly: renderSelectOptions,
     dataList: renderDataList,
     datalist: renderDataList
-};
-
-// Pure function: builds and validates the JSON configuration without rendering
-const getSpec = ({
-    type = "table",
-    data = [],
-    columns = [],
-    options,
-    showLog = false
-} = {}) => {
-    const localType = type;
-    const localData = data;
-    const localColumns = columns;
-    const localOptions = options;
-    const localShowLog = showLog;
-
-    const specJson = {
-        type: localType,
-        data: localData,
-        columns: localColumns,
-        options: localOptions,
-        showLog: localShowLog
-    };
-
-    // Internal call using in-convention
-    guardFunc({ inConfig: specJson });
-
-    return specJson;
 };
 
 // Main build renderer: Public API accepting clean single options object (no targetHtmlId)
