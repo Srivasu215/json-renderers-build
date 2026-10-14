@@ -13,7 +13,7 @@ const B = {
     ...n ? { getSpec: n } : {},
     ...typeof t == "object" ? t : {}
   };
-}, y = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist"], A = ["table", "tableFromSpec"], j = ({ inConfig: e } = {}) => {
+}, y = ["table", "tableFromSpec", "select", "selectOptionsOnly", "dataList", "datalist"], A = ["table", "tableFromSpec"], F = ({ inConfig: e } = {}) => {
   const t = e;
   if (!t || typeof t != "object")
     throw console.error("Config must be an object"), new TypeError("Config must be an object");
@@ -47,7 +47,7 @@ const B = {
     }
   }
   return !0;
-}, D = "table", G = [], K = [], H = {}, I = !1, d = {
+}, D = "table", G = [], K = [], H = {}, I = !1, i = {
   type: D,
   columns: G,
   data: K,
@@ -70,15 +70,15 @@ const B = {
 ], v = {
   columns: V,
   data: k
-}, i = {
-  ...d,
+}, c = {
+  ...i,
   ...v
-}, F = ({
-  type: e = i.type,
-  data: t = i.data,
-  columns: o = i.columns,
-  options: n = i.options,
-  showLog: l = i.showLog
+}, p = ({
+  type: e = c.type,
+  data: t = c.data,
+  columns: o = c.columns,
+  options: n = c.options,
+  showLog: l = c.showLog
 } = {}) => {
   const s = {
     type: e,
@@ -87,35 +87,36 @@ const B = {
     options: n,
     showLog: l
   };
-  return j({ inConfig: s }), s;
+  return F({ inConfig: s }), s;
 };
-Object.assign(F, i);
+Object.assign(p, c);
+p.toJSON = () => structuredClone(c);
 const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e, t) => {
   if (!M(e)) return;
   let o = {};
   for (const [n, l] of Object.entries(e))
-    o[n] = p(l, t);
+    o[n] = w(l, t);
   return o;
-}, Y = (e, t) => {
+}, J = (e, t) => {
   const o = structuredClone(e);
-  return Array.isArray(o) ? o.map((l) => p(l, t)) : void 0;
-}, L = (e, t) => e.replace(/\$\{(\w+)\}/g, (o, n) => t[n] !== void 0 ? t[n] : o), J = (e, t) => L(e, t), p = (e, t) => {
+  return Array.isArray(o) ? o.map((l) => w(l, t)) : void 0;
+}, L = (e, t) => e.replace(/\$\{(\w+)\}/g, (o, n) => t[n] !== void 0 ? t[n] : o), Y = (e, t) => L(e, t), w = (e, t) => {
   const o = structuredClone(e);
-  return typeof o == "string" ? L(o, t) : (o === null || typeof o != "object" || ("textContent" in o && (o.textContent = J(o == null ? void 0 : o.textContent, t)), "attributes" in o && (o.attributes = _(o == null ? void 0 : o.attributes, t)), "children" in o && (o.children = Y(o == null ? void 0 : o.children, t))), o);
+  return typeof o == "string" ? L(o, t) : (o === null || typeof o != "object" || ("textContent" in o && (o.textContent = Y(o == null ? void 0 : o.textContent, t)), "attributes" in o && (o.attributes = _(o == null ? void 0 : o.attributes, t)), "children" in o && (o.children = J(o == null ? void 0 : o.children, t))), o);
 }, m = (e, t) => {
   const o = e, n = t;
-  return o.map((l) => p(n, l));
+  return o.map((l) => w(n, l));
 }, P = (e, t, o) => {
   const n = o, l = t;
   let r = [];
-  return n.map((c) => {
-    let u = structuredClone(e);
-    u.textContent = l[c.columnName], r.push(u);
+  return n.map((u) => {
+    let d = structuredClone(e);
+    d.textContent = l[u.columnName], r.push(d);
   }), r;
 }, x = (e, t, o) => {
   e.forEach((n, l) => {
-    const r = t == null ? void 0 : t.data[l], c = P(o, r, t == null ? void 0 : t.columns);
-    n.children = c;
+    const r = t == null ? void 0 : t.data[l], u = P(o, r, t == null ? void 0 : t.columns);
+    n.children = u;
   });
 }, q = (e, t) => {
   const o = structuredClone(t);
@@ -357,9 +358,9 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     func: "fromCollection"
   }
 ], h = { data: {}, base: b, spec: a }, yt = { fromCollection: m, tableBody: P, buildBody: x }, pt = (e, t) => {
-  const o = e.dataRole ? f(h[e.fileName], e.dataRole) : h[e.fileName], n = [...e.filePath ?? []], l = n.pop(), r = n.reduce((c, u) => c[u], o);
+  const o = e.dataRole ? f(h[e.fileName], e.dataRole) : h[e.fileName], n = [...e.filePath ?? []], l = n.pop(), r = n.reduce((u, d) => u[d], o);
   r[l] = t;
-}, N = (e) => {
+}, g = (e) => {
   e.forEach((t) => {
     const o = ot(h, t.sourcePath);
     if (o) {
@@ -368,7 +369,7 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     } else
       console.log("   !instruction : ", t), console.log("   !source : ", o);
   });
-}, wt = (e) => (h.data = e, N(ft), N(mt), x(f(b, "table-body").children, e, a.buildBodyCell), W(b, a), tt(b, a), b), g = ({
+}, wt = (e) => (h.data = e, g(ft), g(mt), x(f(b, "table-body").children, e, a.buildBodyCell), W(b, a), tt(b, a), b), $ = ({
   inData: e,
   inColumns: t,
   footer: o = [],
@@ -386,24 +387,24 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     (o) => typeof o == "object" && o !== null ? o : { rowValue: o }
   );
   return m(t, a.buildOption);
-}, $ = ({ inData: e = [] } = {}) => {
+}, j = ({ inData: e = [] } = {}) => {
   const t = (e ?? []).map(
     (n) => typeof n == "object" && n !== null ? n : { rowValue: n }
   ), o = structuredClone(a.buildDataList);
   return o.children = m(t, a.buildOption), o;
 }, gt = {
-  table: g,
-  tableFromSpec: g,
+  table: $,
+  tableFromSpec: $,
   select: Ct,
   selectOptionsOnly: Nt,
-  dataList: $,
-  datalist: $
+  dataList: j,
+  datalist: j
 }, $t = ({
-  type: e = d.type,
-  data: t = d.data,
-  columns: o = d.columns,
-  options: n = d.options,
-  showLog: l = d.showLog
+  type: e = i.type,
+  data: t = i.data,
+  columns: o = i.columns,
+  options: n = i.options,
+  showLog: l = i.showLog
 } = {}) => {
   const s = {
     type: e,
@@ -412,20 +413,21 @@ const M = (e) => typeof e == "object" && e !== null && !Array.isArray(e), _ = (e
     options: n,
     showLog: l
   };
-  j({ inConfig: s });
-  const w = gt[s.type];
-  if (!w)
+  F({ inConfig: s });
+  const C = gt[s.type];
+  if (!C)
     throw new Error(`Renderer for type "${s.type}" not found.`);
-  const C = w({
+  const N = C({
     inColumns: s.columns,
     inData: s.data,
     options: s.options
   });
-  return s.showLog && console.log("json-renderers-build output:", C), C;
+  return s.showLog && console.log("json-renderers-build output:", N), N;
 };
-E({ render: $t, getSpec: F });
+E({ render: $t, getSpec: p, spec: c });
 export {
   $t as default,
-  F as getSpec,
-  $t as render
+  p as getSpec,
+  $t as render,
+  c as spec
 };

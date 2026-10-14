@@ -1,5 +1,5 @@
 import registerGlobal from "./register/index.js";
-import { getSpec, guardFunc, cleanSpec } from "./guard/index.js";
+import { getSpec, guardFunc, cleanSpec, sampleSpec as spec } from "./guard/index.js";
 
 import renderTable from "./table/index.js";
 import renderSelect from "./select/index.js";
@@ -58,11 +58,12 @@ const render = ({
     return createdRenderer;
 };
 
-registerGlobal({ render, getSpec });
+registerGlobal({ render, getSpec, spec });
 
 export {
     render,
-    getSpec
+    getSpec,
+    spec
 };
 
 export default render;

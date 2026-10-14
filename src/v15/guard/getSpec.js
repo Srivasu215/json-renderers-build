@@ -39,5 +39,8 @@ const getSpec = ({
 // Attach sample properties directly to getSpec
 Object.assign(getSpec, sampleSpec);
 
+// Allows JSON.stringify(getSpec) to produce the exact JSON output as JSON.stringify(spec)
+getSpec.toJSON = () => structuredClone(sampleSpec);
+
 export { getSpec, cleanSpec, sampleSpec, sample };
 export default getSpec;
