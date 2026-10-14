@@ -23,18 +23,12 @@
 
     import "https://keshavsoft.github.io/json-to-tag/dist/v9/min.js";
 
+    import data from "./batches.json" with {type: "json"};
+
     const container = document.getElementById("dom-render-container");
 
     const start = async () => {
       try {
-        let data = [
-          { itemName: "0.09/30mm", baseUnit: "kgs" },
-          { itemName: "0.11-25", baseUnit: "kgs" },
-          { itemName: "0.11-30", baseUnit: "kgs" },
-          { itemName: "0.11/32mm", baseUnit: "kgs" },
-          { itemName: "0.11/35mm", baseUnit: "kgs" }
-        ];
-
         const spec = window.ks.jsonRenderersBuild.renderToDom({
           type: "table",
           columns: [{ columnName: "itemName" }, { columnName: "baseUnit" }],
