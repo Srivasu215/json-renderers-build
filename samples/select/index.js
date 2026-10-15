@@ -1,4 +1,4 @@
-import render from "../../docs/dist/v13/min.js";
+import render from "../../docs/dist/v18/min.js";
 
 const start = () => {
   try {

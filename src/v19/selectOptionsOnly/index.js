@@ -1,12 +1,19 @@
 import { fromCollection } from "json-transformer-funcs";
 import spec from "../spec.json" with { type: "json" };
 
-const renderSelectOptions = ({ inData = [] } = {}) => {
-    const localData = (inData ?? []).map(element =>
-        typeof element === "object" && element !== null ? element : { rowValue: element }
-    );
+const renderSelectOptions = ({ inData = [], inColumns = [] } = {}) => {
+    const arrayOfCollections = inColumns.map(element => {
+        const template = structuredClone(spec.buildOption);
 
-    return fromCollection(localData, spec.buildOption);
+        template.textContent = template.textContent.replace("rowValue", element.columnName);
+        template.attributes.value = template.attributes.value.replace("rowValue", element.columnName);
+
+        const createdArray = fromCollection(inData, template);
+
+        return createdArray;
+    });
+
+    return arrayOfCollections;
 };
 
 export default renderSelectOptions;
