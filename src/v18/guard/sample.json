@@ -1,0 +1,18 @@
+{
+  "columns": [
+    {
+      "columnName": "Name",
+      "width": "150px"
+    },
+    {
+      "columnName": "Designation",
+      "width": "100px"
+    }
+  ],
+  "data": [
+    {
+      "Name": "Keshav",
+      "Designation": "Founder"
+    }
+  ]
+}
