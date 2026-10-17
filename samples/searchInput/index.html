@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Input Specification Sample - json-renderers-build</title>
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+  <main class="container-fluid py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h1 id="head1" style="margin-top:0;font-size:1.5rem" class="mb-1">Search Input Spec Builder Demo</h1>
+        <p class="text-muted small mb-0">Compiled JSON-to-DOM specification for <code>&lt;input type="search"&gt;</code> element</p>
+      </div>
+      <a href="../../docs/index.html" class="btn btn-outline-secondary btn-sm">← Back to Docs</a>
+    </div>
+
+    <div class="card p-3 mb-3">
+      <h5>Rendered Spec Output (JSON):</h5>
+      <pre id="spec-output" class="bg-dark text-light p-3 rounded small"></pre>
+    </div>
+
+    <div id="dom-render-container" class="card p-3">
+      <h5>DOM Rendered Input:</h5>
+      <div id="render-target" class="mt-2"></div>
+    </div>
+  </main>
+
+  <script type="module" src="./index.js"></script>
+</body>
+
+</html>
