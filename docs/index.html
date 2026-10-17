@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>json-renderers-build | Headless UI Specification Compiler</title>
-  <meta name="description" content="Headless component specification compiler for json-renderers, converting structured data and UI skeletons into declarative JSON-to-DOM specs using json-to-spec.">
+  <meta name="description"
+    content="Headless component specification compiler for json-renderers, converting structured data and UI skeletons into declarative JSON-to-DOM specs using json-to-spec.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -36,28 +39,35 @@
     };
   </script>
   <style>
-    pre, code {
+    pre,
+    code {
       font-family: 'Fira Code', monospace;
     }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
       background: rgba(15, 23, 42, 0.6);
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: rgba(99, 102, 241, 0.3);
       border-radius: 4px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(99, 102, 241, 0.6);
     }
+
     .glass-panel {
       background: rgba(15, 23, 42, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
+
     .glass-card {
       background: rgba(30, 41, 59, 0.5);
       backdrop-filter: blur(8px);
@@ -66,36 +76,50 @@
   </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<body
+  class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
   <!-- Top Navbar -->
   <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center font-bold text-white shadow-lg text-lg shadow-indigo-500/20">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center font-bold text-white shadow-lg text-lg shadow-indigo-500/20">
           ⚙️
         </div>
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-base font-bold text-white tracking-tight">json-renderers-build</h1>
-            <span id="version-badge" class="px-2 py-0.5 text-xs bg-indigo-500/20 text-indigo-300 rounded-full border border-indigo-500/30 font-mono">v3.0.0</span>
+            <span id="version-badge"
+              class="px-2 py-0.5 text-xs bg-indigo-500/20 text-indigo-300 rounded-full border border-indigo-500/30 font-mono">v3.0.0</span>
           </div>
           <p class="text-xs text-slate-400">Headless UI Specification Compiler</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2.5">
-        <a href="#playground" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-indigo-600/30">
+        <a href="./subDoc/index.html"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:flex items-center gap-1">
+          <span>📂</span> subDoc
+        </a>
+        <a href="#playground"
+          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-sm shadow-indigo-600/30">
           <span>⚡</span> Live Playground
         </a>
-        <a href="#samples" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:flex items-center gap-1">
+        <a href="#samples"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition hidden sm:flex items-center gap-1">
           <span>📂</span> Samples
         </a>
-        <a href="https://keshavsoft.github.io/json-renderers-build/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-200 border border-emerald-500/30 transition flex items-center gap-1.5">
+        <a href="https://keshavsoft.github.io/json-renderers-build/" target="_blank" rel="noopener noreferrer"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-200 border border-emerald-500/30 transition flex items-center gap-1.5">
           <span>🌐</span> GitHub Pages
         </a>
-        <a href="https://github.com/keshavsoft/json-renderers-build" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        <a href="https://github.com/keshavsoft/json-renderers-build" target="_blank" rel="noopener noreferrer"
+          class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
           <span class="hidden md:inline">GitHub</span>
         </a>
       </div>
@@ -106,23 +130,32 @@
 
     <!-- Hero Section -->
     <section class="text-center py-6 sm:py-10 space-y-5">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-mono">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 font-mono">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         Ecosystem Story: Spec Compiler Layer
       </div>
       <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
         Build Declarative UI Specifications <br class="hidden sm:inline" />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Headless, Pure, and Config-Driven</span>
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Headless,
+          Pure, and Config-Driven</span>
       </h2>
       <p class="max-w-4xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed">
-        <strong class="text-slate-200">json-renderers-build</strong> transforms raw data arrays and column definitions into a pure DOM specification AST (<code class="text-indigo-300 font-mono">specAsJsonToDom</code>). This repo does not live in the browser DOM layer. It is the headless spec generator, while the actual DOM creation is handled by <code class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</code> and the runtime mount step is performed by <code class="text-indigo-300 font-mono">json-renderers</code>.
+        <strong class="text-slate-200">json-renderers-build</strong> transforms raw data arrays and column definitions
+        into a pure DOM specification AST (<code class="text-indigo-300 font-mono">specAsJsonToDom</code>). This repo
+        does not live in the browser DOM layer. It is the headless spec generator, while the actual DOM creation is
+        handled by <code class="text-emerald-300 font-mono">@keshavsoft/json-to-tag</code> and the runtime mount step is
+        performed by <code class="text-indigo-300 font-mono">json-renderers</code>.
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <a href="#playground" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-indigo-600/25">
+        <a href="#playground"
+          class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm transition flex items-center gap-2 shadow-lg shadow-indigo-600/25">
           <span>⚡</span> Try Live Spec Compiler
         </a>
-        <a href="#architecture" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+        <a href="#architecture"
+          class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
           <span>📐</span> Architecture & The Story
         </a>
       </div>
@@ -136,21 +169,29 @@
           <h3 class="text-xl sm:text-2xl font-bold text-white tracking-tight">The 3-Tier Declarative Pipeline</h3>
         </div>
         <p class="text-xs text-slate-400 max-w-md">
-          Understanding the division of labor between <span class="text-indigo-300">json-to-spec</span>, <strong class="text-white">json-renderers-build (this repo)</strong>, and <span class="text-emerald-300">json-renderers</span>.
+          Understanding the division of labor between <span class="text-indigo-300">json-to-spec</span>, <strong
+            class="text-white">json-renderers-build (this repo)</strong>, and <span
+            class="text-emerald-300">json-renderers</span>.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Tier 1 -->
         <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group hover:border-indigo-500/40 transition">
-          <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none"></div>
+          <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-indigo-500/5 rounded-full blur-xl pointer-events-none">
+          </div>
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">Tier 1 • Compiler Core</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">Tier
+              1 • Compiler Core</span>
             <span class="text-lg">⚙️</span>
           </div>
           <h4 class="text-base font-bold text-white mb-2">json-to-spec</h4>
           <p class="text-xs text-slate-400 leading-relaxed mb-4">
-            The low-level template compiler engine. Evaluates operations like <code class="text-indigo-300 font-mono">loopCollection</code>, <code class="text-indigo-300 font-mono">loopObject</code>, and <code class="text-indigo-300 font-mono">loopArray</code> on raw skeleton files.
+            The low-level template compiler engine. Evaluates operations like <code
+              class="text-indigo-300 font-mono">loopCollection</code>, <code
+              class="text-indigo-300 font-mono">loopObject</code>, and <code
+              class="text-indigo-300 font-mono">loopArray</code> on raw skeleton files.
           </p>
           <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-400">
             <code>jsonToSpec(skeleton, context)</code>
@@ -158,19 +199,27 @@
         </div>
 
         <!-- Tier 2 (THIS REPO) -->
-        <div class="glass-panel p-5 rounded-2xl border-indigo-500/50 shadow-xl shadow-indigo-500/10 relative overflow-hidden bg-slate-900/90">
-          <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-bl-lg">
+        <div
+          class="glass-panel p-5 rounded-2xl border-indigo-500/50 shadow-xl shadow-indigo-500/10 relative overflow-hidden bg-slate-900/90">
+          <div
+            class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-bl-lg">
             This Repo
           </div>
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Tier 2 • Spec Builder</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Tier
+              2 • Spec Builder</span>
             <span class="text-lg">📦</span>
           </div>
           <h4 class="text-base font-bold text-indigo-300 mb-2">json-renderers-build</h4>
           <p class="text-xs text-slate-300 leading-relaxed mb-4">
-            <strong>Headless UI Spec Builder</strong>. Encapsulates predefined component blueprints (<code class="text-indigo-300 font-mono">table</code>, <code class="text-indigo-300 font-mono">select</code>, <code class="text-indigo-300 font-mono">selectOptionsOnly</code>) and returns pure JSON-to-DOM AST specifications. Zero DOM coupling.
+            <strong>Headless UI Spec Builder</strong>. Encapsulates predefined component blueprints (<code
+              class="text-indigo-300 font-mono">table</code>, <code class="text-indigo-300 font-mono">select</code>,
+            <code class="text-indigo-300 font-mono">selectOptionsOnly</code>) and returns pure JSON-to-DOM AST
+            specifications. Zero DOM coupling.
           </p>
-          <div class="p-2.5 rounded-lg bg-slate-950/80 border border-indigo-500/30 text-[11px] font-mono text-indigo-200">
+          <div
+            class="p-2.5 rounded-lg bg-slate-950/80 border border-indigo-500/30 text-[11px] font-mono text-indigo-200">
             <code>render({ type, data, columns })</code>
           </div>
         </div>
@@ -178,12 +227,16 @@
         <!-- Tier 3 -->
         <div class="glass-panel p-5 rounded-2xl relative overflow-hidden group hover:border-emerald-500/40 transition">
           <div class="flex items-center justify-between mb-3">
-            <span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">Tier 3 • DOM Runtime</span>
+            <span
+              class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">Tier
+              3 • DOM Runtime</span>
             <span class="text-lg">🖥️</span>
           </div>
           <h4 class="text-base font-bold text-white mb-2">json-renderers & json-to-tag</h4>
           <p class="text-xs text-slate-400 leading-relaxed mb-4">
-            The browser DOM consumer. Ingests the specification AST generated by <code class="text-indigo-300 font-mono">json-renderers-build</code>, instantiates concrete DOM nodes, and mounts into container elements.
+            The browser DOM consumer. Ingests the specification AST generated by <code
+              class="text-indigo-300 font-mono">json-renderers-build</code>, instantiates concrete DOM nodes, and mounts
+            into container elements.
           </p>
           <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-400">
             <code>container.append(jsonToTag(spec))</code>
@@ -201,12 +254,14 @@
         </div>
         <div class="flex items-center gap-3">
           <label for="component-type" class="text-xs text-slate-400 font-medium">Component Type:</label>
-          <select id="component-type" class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-1.5 text-white font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <select id="component-type"
+            class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-1.5 text-white font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
             <option value="table" selected>table</option>
             <option value="select">select</option>
             <option value="selectOptionsOnly">selectOptionsOnly</option>
           </select>
-          <button id="btn-compile" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1">
+          <button id="btn-compile"
+            class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-sm transition flex items-center gap-1">
             <span>▶</span> Compile
           </button>
         </div>
@@ -222,15 +277,19 @@
                 <span>📝</span> Input Data (JSON)
               </span>
               <div class="flex items-center gap-2">
-                <select id="preset-selector" class="bg-slate-800 border border-slate-700 text-[11px] rounded px-2 py-1 text-slate-300 font-mono">
+                <select id="preset-selector"
+                  class="bg-slate-800 border border-slate-700 text-[11px] rounded px-2 py-1 text-slate-300 font-mono">
                   <option value="batches">Preset: Batches</option>
                   <option value="employees">Preset: Employees</option>
                   <option value="ledgers">Preset: Ledgers (Strings)</option>
                 </select>
-                <button id="btn-format-data" class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
+                <button id="btn-format-data"
+                  class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
               </div>
             </div>
-            <textarea id="input-data" rows="8" class="w-full bg-slate-950 text-indigo-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none custom-scrollbar" spellcheck="false"></textarea>
+            <textarea id="input-data" rows="8"
+              class="w-full bg-slate-950 text-indigo-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none custom-scrollbar"
+              spellcheck="false"></textarea>
           </div>
 
           <div id="columns-panel" class="glass-panel p-4 rounded-2xl space-y-3">
@@ -238,9 +297,12 @@
               <span class="text-xs font-bold text-white uppercase tracking-wider font-mono flex items-center gap-1.5">
                 <span>📊</span> Columns (for table)
               </span>
-              <button id="btn-format-columns" class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
+              <button id="btn-format-columns"
+                class="text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800">Format</button>
             </div>
-            <textarea id="input-columns" rows="5" class="w-full bg-slate-950 text-indigo-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none custom-scrollbar" spellcheck="false"></textarea>
+            <textarea id="input-columns" rows="5"
+              class="w-full bg-slate-950 text-indigo-200 border border-slate-800 rounded-xl p-3 font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none custom-scrollbar"
+              spellcheck="false"></textarea>
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs text-slate-400 space-y-1">
@@ -248,7 +310,9 @@
               <span>💡</span> Headless Execution
             </div>
             <p>
-              The compiler runs purely in memory via <code class="text-indigo-300 font-mono">render({ type, data, columns })</code>. No DOM nodes are created during this stage.
+              The compiler runs purely in memory via <code
+                class="text-indigo-300 font-mono">render({ type, data, columns })</code>. No DOM nodes are created
+              during this stage.
             </p>
           </div>
         </div>
@@ -258,22 +322,27 @@
           <!-- Output Tabs Header -->
           <div class="flex items-center justify-between bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
             <div class="flex items-center gap-1">
-              <button id="tab-spec" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition flex items-center gap-1.5">
+              <button id="tab-spec"
+                class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition flex items-center gap-1.5">
                 <span>📄</span> Compiled Spec AST
               </button>
-              <button id="tab-skeleton" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
+              <button id="tab-skeleton"
+                class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
                 <span>📐</span> Skeleton Blueprint
               </button>
-              <button id="tab-preview" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
+              <button id="tab-preview"
+                class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5">
                 <span>👁️</span> Visual DOM Preview
               </button>
             </div>
 
             <div class="flex items-center gap-2 pr-1">
-              <button id="btn-copy-spec" class="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono transition flex items-center gap-1">
+              <button id="btn-copy-spec"
+                class="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono transition flex items-center gap-1">
                 <span>📋</span> Copy
               </button>
-              <button id="btn-download-spec" class="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono transition flex items-center gap-1">
+              <button id="btn-download-spec"
+                class="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-mono transition flex items-center gap-1">
                 <span>💾</span> Download
               </button>
             </div>
@@ -281,35 +350,41 @@
 
           <!-- View 1: Compiled Spec AST -->
           <div id="view-spec" class="glass-panel p-4 rounded-2xl flex-1 flex flex-col min-h-[460px]">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
+            <div
+              class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
               <span class="font-mono text-emerald-400 flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span> specAsJsonToDom output
               </span>
               <span id="output-meta-stats" class="font-mono text-[11px]">0 nodes generated</span>
             </div>
-            <pre class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-emerald-300 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-spec">// Click Compile to generate spec</code></pre>
+            <pre
+              class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-emerald-300 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-spec">// Click Compile to generate spec</code></pre>
           </div>
 
           <!-- View 2: Skeleton Blueprint -->
           <div id="view-skeleton" class="glass-panel p-4 rounded-2xl flex-1 flex flex-col min-h-[460px] hidden">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
+            <div
+              class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
               <span class="font-mono text-indigo-400 flex items-center gap-1.5">
                 <span>📐</span> Predefined skeleton.json
               </span>
               <span class="font-mono text-[11px]">Template directive source</span>
             </div>
-            <pre class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-indigo-200 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-skeleton">// Loading skeleton...</code></pre>
+            <pre
+              class="flex-1 m-0 p-3 bg-slate-950 rounded-xl text-indigo-200 font-mono text-xs overflow-auto custom-scrollbar leading-relaxed max-h-[500px]"><code id="code-output-skeleton">// Loading skeleton...</code></pre>
           </div>
 
           <!-- View 3: Visual DOM Preview -->
           <div id="view-preview" class="glass-panel p-4 rounded-2xl flex-1 flex flex-col min-h-[460px] hidden">
-            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
+            <div
+              class="flex items-center justify-between pb-2 border-b border-slate-800/80 mb-3 text-xs text-slate-400">
               <span class="font-mono text-pink-400 flex items-center gap-1.5">
                 <span>👁️</span> Rendered Preview (Downstream Result)
               </span>
               <span class="font-mono text-[11px]">How it mounts in the browser</span>
             </div>
-            <div id="dom-preview-container" class="flex-1 p-4 bg-slate-900/60 rounded-xl border border-slate-800 overflow-auto custom-scrollbar">
+            <div id="dom-preview-container"
+              class="flex-1 p-4 bg-slate-900/60 rounded-xl border border-slate-800 overflow-auto custom-scrollbar">
               <!-- DOM elements rendered dynamically here -->
             </div>
           </div>
@@ -335,7 +410,10 @@
             <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[11px] font-mono">Full Grid</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Constructs complete Bootstrap-ready data tables with <code class="text-indigo-300">&lt;table class="table table-hover table-striped mb-0"&gt;</code>, repeating headers from <code class="text-indigo-300 font-mono">columns</code>, and row values from <code class="text-indigo-300 font-mono">data</code>.
+            Constructs complete Bootstrap-ready data tables with <code
+              class="text-indigo-300">&lt;table class="table table-hover table-striped mb-0"&gt;</code>, repeating
+            headers from <code class="text-indigo-300 font-mono">columns</code>, and row values from <code
+              class="text-indigo-300 font-mono">data</code>.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <div class="text-slate-500">// Calling signature</div>
@@ -350,7 +428,9 @@
             <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[11px] font-mono">Dropdown</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Constructs a complete <code class="text-purple-300">&lt;select id="LedgerName"&gt;</code> containing an array of <code class="text-purple-300">&lt;option value="..."&gt;</code> elements from a primitive array of strings.
+            Constructs a complete <code class="text-purple-300">&lt;select id="LedgerName"&gt;</code> containing an
+            array of <code class="text-purple-300">&lt;option value="..."&gt;</code> elements from a primitive array of
+            strings.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <div class="text-slate-500">// Calling signature</div>
@@ -361,11 +441,13 @@
         <!-- Select Options Only Card -->
         <div class="glass-card p-5 rounded-2xl space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">type: "selectOptionsOnly"</span>
+            <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">type:
+              "selectOptionsOnly"</span>
             <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[11px] font-mono">Fragment</span>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Generates an un-wrapped fragment spec containing only the array of <code class="text-emerald-300">&lt;option&gt;</code> nodes, tailored for appending into existing select inputs.
+            Generates an un-wrapped fragment spec containing only the array of <code
+              class="text-emerald-300">&lt;option&gt;</code> nodes, tailored for appending into existing select inputs.
           </p>
           <div class="text-[11px] font-mono text-slate-400 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <div class="text-slate-500">// Calling signature</div>
@@ -385,11 +467,13 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <a href="../samples/table/index.html" class="glass-panel p-5 rounded-2xl group hover:border-indigo-500/50 transition flex flex-col justify-between">
+        <a href="../samples/table/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-indigo-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">📊</span>
-              <span class="text-xs text-indigo-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-indigo-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
             </div>
             <h4 class="text-base font-bold text-white mb-1 group-hover:text-indigo-300 transition">Table Spec Demo</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
@@ -399,11 +483,13 @@
           <div class="text-[11px] font-mono text-slate-500">samples/table/index.html</div>
         </a>
 
-        <a href="../samples/select/index.html" class="glass-panel p-5 rounded-2xl group hover:border-purple-500/50 transition flex flex-col justify-between">
+        <a href="../samples/select/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-purple-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">🔽</span>
-              <span class="text-xs text-purple-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-purple-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
             </div>
             <h4 class="text-base font-bold text-white mb-1 group-hover:text-purple-300 transition">Select Spec Demo</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
@@ -413,13 +499,16 @@
           <div class="text-[11px] font-mono text-slate-500">samples/select/index.html</div>
         </a>
 
-        <a href="../samples/selectOptionsOnly/index.html" class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between">
+        <a href="../samples/selectOptionsOnly/index.html"
+          class="glass-panel p-5 rounded-2xl group hover:border-emerald-500/50 transition flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xl">📑</span>
-              <span class="text-xs text-emerald-400 font-mono group-hover:translate-x-1 transition">Open Demo &rarr;</span>
+              <span class="text-xs text-emerald-400 font-mono group-hover:translate-x-1 transition">Open Demo
+                &rarr;</span>
             </div>
-            <h4 class="text-base font-bold text-white mb-1 group-hover:text-emerald-300 transition">Options Fragment Demo</h4>
+            <h4 class="text-base font-bold text-white mb-1 group-hover:text-emerald-300 transition">Options Fragment
+              Demo</h4>
             <p class="text-xs text-slate-400 leading-relaxed mb-4">
               Demonstrates option fragment generation for populating existing dropdown elements.
             </p>
@@ -439,12 +528,14 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="text-xs text-slate-400 mb-1 block font-mono">NPM Package:</label>
-          <pre class="p-3 bg-slate-950 rounded-xl text-xs text-indigo-300 font-mono border border-slate-800 overflow-x-auto"><code>npm install json-renderers-build</code></pre>
+          <pre
+            class="p-3 bg-slate-950 rounded-xl text-xs text-indigo-300 font-mono border border-slate-800 overflow-x-auto"><code>npm install json-renderers-build</code></pre>
         </div>
 
         <div>
           <label class="text-xs text-slate-400 mb-1 block font-mono">ES Module CDN:</label>
-          <pre class="p-3 bg-slate-950 rounded-xl text-xs text-indigo-300 font-mono border border-slate-800 overflow-x-auto"><code>import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers-build@main/docs/dist/v3/min.js";</code></pre>
+          <pre
+            class="p-3 bg-slate-950 rounded-xl text-xs text-indigo-300 font-mono border border-slate-800 overflow-x-auto"><code>import render from "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers-build@main/docs/dist/v3/min.js";</code></pre>
         </div>
       </div>
     </section>
@@ -458,7 +549,8 @@
         <strong class="text-slate-400">json-renderers-build</strong> &bull; KeshavSoft &bull; MIT License
       </div>
       <div class="flex items-center gap-4 text-slate-400">
-        <a href="https://github.com/keshavsoft/json-renderers-build" class="hover:text-white transition">GitHub Repository</a>
+        <a href="https://github.com/keshavsoft/json-renderers-build" class="hover:text-white transition">GitHub
+          Repository</a>
         <a href="https://github.com/keshavsoft/json-to-spec" class="hover:text-white transition">json-to-spec</a>
         <a href="https://github.com/keshavsoft/json-renderers" class="hover:text-white transition">json-renderers</a>
       </div>
@@ -790,13 +882,13 @@
     btnFormatData.addEventListener("click", () => {
       try {
         inputDataEl.value = JSON.stringify(JSON.parse(inputDataEl.value), null, 2);
-      } catch (e) {}
+      } catch (e) { }
     });
 
     btnFormatColumns.addEventListener("click", () => {
       try {
         inputColumnsEl.value = JSON.stringify(JSON.parse(inputColumnsEl.value), null, 2);
-      } catch (e) {}
+      } catch (e) { }
     });
 
     btnCopySpec.addEventListener("click", () => {
@@ -832,4 +924,5 @@
     syncTypeUI();
   </script>
 </body>
+
 </html>

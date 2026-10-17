@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>json-renderers-build | Documentation & How It Works</title>
+  <meta name="description"
+    content="Documentation for json-renderers-build: how it works, why dependencies are used, component blueprints, and live interactive samples.">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap 5.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-page: #ffffff;
+      --bg-surface: #f8fafc;
+      --bg-subtle: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --border-color: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --primary: #4338ca;
+      --primary-light: #eef2ff;
+      --primary-border: #c7d2fe;
+      --accent-blue: #0284c7;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    code,
+    pre,
+    .font-mono {
+      font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Clean Card & Border Styles */
+    .doc-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .doc-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.06);
+    }
+
+    .doc-card-highlight {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-surface) 100%);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+    }
+
+    /* Pill Badges */
+    .badge-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    .badge-primary-soft {
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+    }
+
+    .badge-emerald-soft {
+      background-color: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-amber-soft {
+      background-color: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-blue-soft {
+      background-color: #f0f9ff;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+    }
+
+    .badge-purple-soft {
+      background-color: #faf5ff;
+      color: #6d28d9;
+      border: 1px solid #e9d5ff;
+    }
+
+    /* Step flow badge */
+    .step-number {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* Clean Code Block */
+    .code-container {
+      background-color: #0f172a;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+    }
+
+    .code-container-light {
+      background-color: var(--bg-surface);
+      color: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.825rem;
+      overflow-x: auto;
+    }
+
+    /* Custom Navigation */
+    .navbar-doc {
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-link-custom {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .nav-link-custom:hover {
+      color: var(--text-main);
+      background-color: var(--bg-subtle);
+    }
+
+    /* Live Preview Box */
+    .preview-box {
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      min-height: 180px;
+    }
+
+    /* Table styles */
+    .dep-table th {
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-bottom: 2px solid var(--border-color);
+      padding: 0.85rem 1rem;
+    }
+
+    .dep-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.875rem;
+      vertical-align: middle;
+    }
+
+    /* Flow step arrow */
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-subtle);
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .flow-arrow {
+        transform: rotate(90deg);
+        padding: 0.5rem 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="navbar-doc sticky-top py-2 shadow-xs">
+    <div class="container-xl d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="fs-4" aria-hidden="true">⚙️</span>
+        <div>
+          <a href="#top" class="text-decoration-none text-dark d-flex align-items-center gap-2">
+            <span class="fw-bold fs-5 tracking-tight">json-renderers-build</span>
+            <span class="badge-pill badge-primary-soft">v1.22.0 (v22)</span>
+          </a>
+        </div>
+      </div>
+
+      <nav class="d-none d-lg-flex align-items-center gap-1" aria-label="Main Navigation">
+        <a href="../index.html" class="nav-link-custom">🏠 Main Portal</a>
+        <a href="./index.html" class="nav-link-custom">📁 SubDoc Hub</a>
+        <a href="./simpleDoc.html" class="nav-link-custom">🌱 Simple Guide</a>
+        <span class="text-muted mx-1">|</span>
+        <a href="#how-it-works" class="nav-link-custom">💡 How It Works</a>
+        <a href="#dependencies" class="nav-link-custom">📦 Dependencies</a>
+        <a href="#playground" class="nav-link-custom">⚡ Playground</a>
+        <a href="#samples" class="nav-link-custom">📂 Samples</a>
+      </nav>
+
+      <div class="d-flex align-items-center gap-2">
+        <a href="#playground" class="btn btn-sm btn-primary fw-medium px-3">
+          Try Live Demo
+        </a>
+        <a href="https://github.com/keshavsoft/json-renderers-build" target="_blank" rel="noopener noreferrer"
+          class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center gap-1" title="GitHub Repository">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          <span class="d-none d-sm-inline">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="py-5 bg-white border-bottom border-light-subtle">
+    <div class="container-xl py-2">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <div class="d-inline-flex align-items-center gap-2 mb-3">
+            <span class="badge-pill badge-primary-soft">KeshavSoft Declarative UI</span>
+            <span class="badge-pill badge-emerald-soft">100% Headless Compiler</span>
+            <span class="badge-pill badge-blue-soft">Pure Functions</span>
+          </div>
+          <h1 class="display-6 fw-bold text-dark mb-3">
+            Turn Plain JSON Data into Declarative UI Blueprints
+          </h1>
+          <p class="lead text-secondary mb-4" style="font-size: 1.15rem;">
+            <strong>json-renderers-build</strong> json-renderers-build is a headless specification compiler in the
+            KeshavSoft declarative UI ecosystem.
+
+            It accepts a component type, data, and columns, then returns a JSON description of the requested UI. It does
+            not create live DOM elements.
+          </p>
+          <p class="text-muted small mb-4">
+            💡 <strong>Crucial concept:</strong> This repository does <em>not</em> touch the browser screen directly. It
+            creates the clean architectural blueprint. Then downstream tools (<code
+              class="font-mono text-dark">@keshavsoft/json-to-tag</code> and <code
+              class="font-mono text-dark">json-renderers</code>) turn that blueprint into real clickable HTML elements
+            and mount them to your page.
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="#how-it-works" class="btn btn-outline-primary px-3 py-2 fw-medium">
+              Understand the Flow
+            </a>
+            <a href="#dependencies" class="btn btn-outline-secondary px-3 py-2 fw-medium">
+              View Repository Dependencies
+            </a>
+            <a href="#playground" class="btn btn-primary px-3 py-2 fw-medium">
+              Interactive Component Playground
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="doc-card p-4 shadow-sm">
+            <h2 class="h6 fw-bold text-dark text-uppercase tracking-wide mb-3">
+              ⚡ Quick Architectural Snapshot
+            </h2>
+            <ul class="list-unstyled d-flex flex-column gap-3 mb-0 small">
+              <li class="d-flex align-items-start gap-2">
+                <span class="badge-pill badge-emerald-soft px-2 py-1">✓</span>
+                <div>
+                  <strong class="text-dark">Zero DOM mutations:</strong>
+                  <span class="text-muted d-block">Runs anywhere: Node.js server, Web Worker, or Browser.</span>
+                </div>
+              </li>
+              <li class="d-flex align-items-start gap-2">
+                <span class="badge-pill badge-blue-soft px-2 py-1">✓</span>
+                <div>
+                  <strong class="text-dark">6 Built-in Blueprints:</strong>
+                  <span class="text-muted d-block">Table, Vertical Form, Search Input, Select, Options Only,
+                    DataList.</span>
+                </div>
+              </li>
+              <li class="d-flex align-items-start gap-2">
+                <span class="badge-pill badge-purple-soft px-2 py-1">✓</span>
+                <div>
+                  <strong class="text-dark">Pure & Deterministic:</strong>
+                  <span class="text-muted d-block">Same inputs always yield the identical specification AST.</span>
+                </div>
+              </li>
+              <li class="d-flex align-items-start gap-2">
+                <span class="badge-pill badge-amber-soft px-2 py-1">✓</span>
+                <div>
+                  <strong class="text-dark">Automated Input Guards:</strong>
+                  <span class="text-muted d-block">Validates configurations and column shapes with informative
+                    errors.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container-xl py-5">
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: HOW IT WORKS (IN SIMPLE WORDS) -->
+    <!-- ========================================== -->
+    <section id="how-it-works" class="mb-5 pb-4">
+      <div class="text-center max-w-3xl mx-auto mb-5">
+        <span class="badge-pill badge-primary-soft mb-2">Step-by-Step Architecture</span>
+        <h2 class="h2 fw-bold text-dark mb-2">How It Works in Simple Words</h2>
+        <p class="text-secondary">
+          Think of building a house: you need an architect's blueprint before a builder pours concrete.
+          In the KeshavSoft ecosystem, <strong>json-renderers-build</strong> is the architect.
+        </p>
+      </div>
+
+      <!-- 3-Step Assembly Pipeline -->
+      <div class="row g-4 mb-5 align-items-stretch">
+        <!-- Step 1 -->
+        <div class="col-md-4">
+          <div class="doc-card p-4 h-100 position-relative">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="step-number">1</span>
+              <div>
+                <span class="text-uppercase small fw-bold text-muted">Input Stage</span>
+                <h3 class="h5 fw-bold text-dark mb-0">Raw Data & Config</h3>
+              </div>
+            </div>
+            <p class="text-secondary small">
+              You provide plain JavaScript arrays or objects containing your business records and simple column
+              definitions.
+            </p>
+            <div class="code-container-light small font-mono">
+              data: [ { name: "Alpha", city: "Hyd" } ]<br>
+              columns: [ { columnName: "name" } ]
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="col-md-4">
+          <div class="doc-card doc-card-highlight p-4 h-100 position-relative border-primary">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="step-number" style="background-color: #4338ca;">2</span>
+              <div>
+                <span class="badge-pill badge-primary-soft mb-1">THIS REPOSITORY</span>
+                <h3 class="h5 fw-bold text-dark mb-0">json-renderers-build</h3>
+              </div>
+            </div>
+            <p class="text-secondary small">
+              Validates your inputs, selects the component blueprint, and compiles everything into a pure <strong>JSON
+                specification AST</strong> (<code class="text-primary font-mono">specAsJsonToDom</code>).
+            </p>
+            <p class="small text-muted mb-0">
+              ⚡ <strong>100% Headless:</strong> Does not touch the browser window, DOM nodes, or CSS directly.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="col-md-4">
+          <div class="doc-card p-4 h-100 position-relative">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <span class="step-number" style="background-color: #059669;">3</span>
+              <div>
+                <span class="text-uppercase small fw-bold text-muted">Downstream Runtime</span>
+                <h3 class="h5 fw-bold text-dark mb-0">DOM & Mounting</h3>
+              </div>
+            </div>
+            <p class="text-secondary small">
+              <strong>@keshavsoft/json-to-tag</strong> takes the specification tree and creates real browser HTML
+              elements (<code class="font-mono text-dark">&lt;table&gt;</code>, <code
+                class="font-mono text-dark">&lt;form&gt;</code>), and <strong>json-renderers</strong> mounts them into
+              your container.
+            </p>
+            <div class="code-container-light small font-mono">
+              target.replaceChildren(domElement);
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Dataflow Box -->
+      <div class="doc-card p-4 bg-surface mb-4">
+        <h3 class="h6 fw-bold text-dark mb-3 text-uppercase">
+          📊 End-to-End Visual Dataflow
+        </h3>
+        <div class="row g-2 align-items-center text-center">
+          <div class="col-12 col-md-3">
+            <div class="p-3 bg-white border rounded">
+              <span class="fs-4 d-block mb-1">📋</span>
+              <strong class="text-dark d-block small">1. Raw JSON Data</strong>
+              <span class="text-muted" style="font-size:0.75rem;">Objects, strings, arrays</span>
+            </div>
+          </div>
+          <div class="col-12 col-md-1 flow-arrow">➔</div>
+          <div class="col-12 col-md-3">
+            <div class="p-3 bg-white border border-primary rounded shadow-xs">
+              <span class="fs-4 d-block mb-1">⚙️</span>
+              <strong class="text-primary d-block small">2. json-renderers-build</strong>
+              <span class="text-muted" style="font-size:0.75rem;">Compiles Spec Tree (AST)</span>
+            </div>
+          </div>
+          <div class="col-12 col-md-1 flow-arrow">➔</div>
+          <div class="col-12 col-md-4">
+            <div class="p-3 bg-white border border-success rounded">
+              <span class="fs-4 d-block mb-1">🌐</span>
+              <strong class="text-success d-block small">3. json-to-tag & Mounting</strong>
+              <span class="text-muted" style="font-size:0.75rem;">Real live HTMLElement on page</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why This Separation Matters -->
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="doc-card p-4 h-100">
+            <h4 class="h6 fw-bold text-dark mb-2">🎯 Why not build the DOM directly here?</h4>
+            <p class="text-secondary small mb-2">
+              If a library mixes business data, layout logic, and browser DOM manipulation all in one place, you cannot
+              run it on a Node.js server, inside a Web Worker, or in automated unit tests without loading heavy fake
+              DOMs
+              like <code class="font-mono">jsdom</code>.
+            </p>
+            <p class="text-secondary small mb-0">
+              By keeping <strong>json-renderers-build</strong> 100% headless, it runs anywhere JavaScript runs, executes
+              in microseconds, and is completely free of DOM side-effects.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="doc-card p-4 h-100">
+            <h4 class="h6 fw-bold text-dark mb-2">🛡️ Built-in Input Safety (Guard System)</h4>
+            <p class="text-secondary small mb-2">
+              Every request passes through an internal guard (<code class="font-mono text-dark">guardFunc</code>).
+              It guarantees:
+            </p>
+            <ul class="text-secondary small mb-0 ps-3">
+              <li><code class="font-mono">type</code> is one of the supported components.</li>
+              <li><code class="font-mono">data</code> is always an array.</li>
+              <li>For tables, each item in <code class="font-mono">columns</code> has a valid <code
+                  class="font-mono">columnName</code> and aligns with data row keys.</li>
+              <li>For forms, input field types are strictly checked against allowed HTML form field types.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================= -->
+    <!-- SECTION 2: DEPENDENCIES USED IN THIS REPOSITORY & WHY  -->
+    <!-- ======================================================= -->
+    <section id="dependencies" class="mb-5 pb-4">
+      <div class="text-center max-w-3xl mx-auto mb-5">
+        <span class="badge-pill badge-primary-soft mb-2">Package Manifest Audit</span>
+        <h2 class="h2 fw-bold text-dark mb-2">What Dependencies Are Used & Why?</h2>
+        <p class="text-secondary">
+          Every dependency in this repository has one clear, modular job. Here is the exact list from <code
+            class="font-mono text-dark">package.json</code> explained in simple words.
+        </p>
+      </div>
+
+      <!-- Quick Summary Table -->
+      <div class="doc-card overflow-hidden mb-5">
+        <div class="table-responsive">
+          <table class="table dep-table mb-0">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 28%;">Dependency Name</th>
+                <th scope="col" style="width: 15%;">Version</th>
+                <th scope="col" style="width: 22%;">Role in Simple Words</th>
+                <th scope="col" style="width: 35%;">Why Are We Using It?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">json-renderers-build-table</strong>
+                  <span class="badge-pill badge-primary-soft ms-1">Component</span>
+                </td>
+                <td><code class="font-mono text-muted">^1.17.3</code></td>
+                <td>Table specification builder</td>
+                <td class="text-secondary">
+                  Generates full table specifications (<code class="font-mono">&lt;table&gt;</code>, <code
+                    class="font-mono">&lt;thead&gt;</code>, <code class="font-mono">&lt;tbody&gt;</code>, cells,
+                  widths) with Bootstrap styling so we don't have to handwrite repetitive table loops.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">json-renderers-build-form</strong>
+                  <span class="badge-pill badge-primary-soft ms-1">Component</span>
+                </td>
+                <td><code class="font-mono text-muted">^1.1.0</code></td>
+                <td>Form specification builder</td>
+                <td class="text-secondary">
+                  Compiles a list of column definitions into complete vertical Bootstrap form layouts (labels, inputs,
+                  selects, textareas, checkboxes, submit buttons) with full accessibility attributes.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">json-renderers-build-input-row</strong>
+                  <span class="badge-pill badge-primary-soft ms-1">Component</span>
+                </td>
+                <td><code class="font-mono text-muted">^1.1.0</code></td>
+                <td>Search & input row builder</td>
+                <td class="text-secondary">
+                  Provides 3 ready-made search input flavours (<code class="font-mono">inputOnly</code>, <code
+                    class="font-mono">inputWithLabel</code>, <code class="font-mono">inputWithLabelButton</code>) for
+                  standardized search and filter rows.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">json-transformer-funcs</strong>
+                  <span class="badge-pill badge-emerald-soft ms-1">Data Helper</span>
+                </td>
+                <td><code class="font-mono text-muted">^1.24.6</code></td>
+                <td>Array & collection transformer</td>
+                <td class="text-secondary">
+                  Provides the functional <code class="font-mono">fromCollection()</code> utility to map raw arrays of
+                  strings or objects into <code class="font-mono">&lt;option&gt;</code> blueprint nodes for select
+                  dropdowns and datalists without mutation.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">json-to-spec</strong>
+                  <span class="badge-pill badge-purple-soft ms-1">Compiler</span>
+                </td>
+                <td><code class="font-mono text-muted">^32.1.3</code></td>
+                <td>Core AST compiler engine</td>
+                <td class="text-secondary">
+                  The foundational AST compilation engine in the KeshavSoft ecosystem. Merges declarative skeleton
+                  templates (<code class="font-mono">skeleton.json</code>) with dynamic data variables.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="text-dark font-mono">vite</strong>
+                  <span class="badge-pill badge-amber-soft ms-1">Dev Tool</span>
+                </td>
+                <td><code class="font-mono text-muted">^5.4.2</code></td>
+                <td>Bundler & Development server</td>
+                <td class="text-secondary">
+                  Bundles modular ES code from <code class="font-mono">src/</code> into minified distribution files
+                  (<code class="font-mono">docs/dist/v22/min.js</code>) and provides local dev servers for live testing.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Detailed Dependency Cards -->
+      <div class="row g-4">
+        <!-- Dependency 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-primary-soft">Component Builder</span>
+              <span class="small text-muted font-mono">src/v22/table/</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">1. json-renderers-build-table</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Creates table specifications with columns, headers, rows, and buttons.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> Instead of writing 100+ lines of loop code to build table headers, body
+              rows, cell alignments, and Bootstrap table classes, we call its <code
+                class="font-mono text-dark">simple()</code> function which returns a tested, standard table
+              specification.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dependency 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-primary-soft">Component Builder</span>
+              <span class="small text-muted font-mono">src/v22/form/</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">2. json-renderers-build-form</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Compiles schema definitions into vertical HTML forms.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> Generates accessible form fields with proper labels, IDs, validation,
+              input
+              types (<code class="font-mono">text</code>, <code class="font-mono">email</code>, <code
+                class="font-mono">select</code>, <code class="font-mono">textarea</code>), and submit buttons in one
+              declarative call.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dependency 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-primary-soft">Component Builder</span>
+              <span class="small text-muted font-mono">src/v22/searchInput/</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">3. json-renderers-build-input-row</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Generates flexible search boxes and input control rows.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> Easily switch between standalone search boxes, labeled inputs, or inputs
+              with attached search buttons without writing custom markup.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dependency 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-emerald-soft">Data Helper</span>
+              <span class="small text-muted font-mono">src/v22/select/</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">4. json-transformer-funcs</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Transforms collections and arrays into target formats.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> When building select dropdowns, it takes an array of strings or objects
+              and uses <code class="font-mono text-dark">fromCollection()</code> to map each item into an <code
+                class="font-mono text-dark">&lt;option&gt;</code> specification cleanly without manual array mutation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dependency 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-purple-soft">Compiler</span>
+              <span class="small text-muted font-mono">Core Engine</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">5. json-to-spec</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Merges component templates with data to produce AST specs.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> It provides the underlying template compiler engine that replaces template
+              variables like <code class="font-mono">${columnName}</code> and <code class="font-mono">${rowValue}</code>
+              inside component skeletons into completed JSON specification ASTs.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dependency 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <span class="badge-pill badge-amber-soft">Dev Dependency</span>
+              <span class="small text-muted font-mono">vite.config.js</span>
+            </div>
+            <h3 class="h6 fw-bold text-dark mb-2">6. vite</h3>
+            <p class="text-secondary small mb-3">
+              <strong>What it does:</strong> Fast local build tool and development server.
+            </p>
+            <p class="text-muted small mb-0">
+              <strong>Why we use it:</strong> Compiles and minifies the ES module files into single standalone script
+              files in <code class="font-mono text-dark">docs/dist/</code> (e.g., <code
+                class="font-mono text-dark">min.js</code>) so developers can load the library via CDN or script tag
+              without installing npm packages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SECTION 3: LIVE INTERACTIVE PLAYGROUND (INSPIRED BY SAMPLES)   -->
+    <!-- ============================================================== -->
+    <section id="playground" class="mb-5 pb-4">
+      <div class="text-center max-w-3xl mx-auto mb-5">
+        <span class="badge-pill badge-primary-soft mb-2">Interactive Demonstration</span>
+        <h2 class="h2 fw-bold text-dark mb-2">Live Component Playground</h2>
+        <p class="text-secondary">
+          Select any component below to see the JavaScript input, compile the headless specification AST live in your
+          browser, and view the mounted HTML element rendered via <code
+            class="font-mono text-dark">@keshavsoft/json-to-tag</code>.
+        </p>
+      </div>
+
+      <div class="doc-card p-4">
+        <!-- Component Switcher Tabs -->
+        <ul class="nav nav-pills mb-4 gap-2 border-bottom pb-3" id="component-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-medium px-3 py-2" id="tab-table" data-component="table" type="button">
+              📊 Table
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-medium px-3 py-2" id="tab-form" data-component="form" type="button">
+              📝 Vertical Form
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-medium px-3 py-2" id="tab-search" data-component="searchInput" type="button">
+              🔍 Search Input
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-medium px-3 py-2" id="tab-select" data-component="select" type="button">
+              🔽 Select Dropdown
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-medium px-3 py-2" id="tab-options" data-component="selectOptionsOnly"
+              type="button">
+              ⚡ Options Only
+            </button>
+          </li>
+        </ul>
+
+        <!-- Component Description & Sample Link -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 bg-surface p-3 rounded">
+          <div>
+            <strong id="active-component-title" class="text-dark d-block">Table Specification</strong>
+            <span id="active-component-desc" class="text-muted small">
+              Generates a full Bootstrap table specification tree with alternating rows and headers.
+            </span>
+          </div>
+          <div>
+            <a id="sample-source-link" href="../samples/table/index.html" target="_blank"
+              class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
+              <span>📂 Open Sample File</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Input Configuration -->
+          <div class="col-lg-5">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <label class="form-label fw-bold small text-uppercase text-dark mb-0">1. Input Configuration
+                (JavaScript)</label>
+              <button id="run-compile-btn" class="btn btn-sm btn-primary fw-medium px-3">
+                ⚡ Compile & Render
+              </button>
+            </div>
+            <div class="code-container font-mono mb-3" style="max-height: 280px; overflow-y: auto;">
+              <pre id="input-config-display" class="mb-0 text-light"></pre>
+            </div>
+            <div class="p-3 bg-surface rounded border small">
+              <strong class="text-dark d-block mb-1">💡 What happens on click:</strong>
+              <span class="text-muted">
+                1. Calls <code class="font-mono text-dark">render(config)</code> from the compiled bundle.<br>
+                2. Outputs the JSON specification tree AST.<br>
+                3. Calls <code class="font-mono text-dark">window.ks.jsonToTag.buildSpecElement(spec)</code> to create
+                the live DOM node and displays it in the preview box.
+              </span>
+            </div>
+          </div>
+
+          <!-- Output Views: Split Spec AST vs Live DOM -->
+          <div class="col-lg-7">
+            <!-- Sub-tabs for AST vs Live DOM -->
+            <ul class="nav nav-tabs mb-3" id="output-tabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-medium small" id="view-dom-tab" type="button">
+                  🌐 Live Rendered DOM Preview
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link fw-medium small" id="view-spec-tab" type="button">
+                  📄 Generated Spec AST (JSON)
+                </button>
+              </li>
+            </ul>
+
+            <!-- Live DOM Container -->
+            <div id="live-dom-view" class="preview-box overflow-auto" style="max-height: 380px;">
+              <div id="playground-dom-container" class="text-muted small text-center py-5">
+                Click <strong>"Compile & Render"</strong> above to see the live output.
+              </div>
+            </div>
+
+            <!-- Spec AST JSON View -->
+            <div id="spec-ast-view" class="code-container font-mono d-none"
+              style="max-height: 380px; overflow-y: auto;">
+              <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-secondary">
+                <span class="small text-secondary">JSON-to-DOM Specification AST</span>
+                <button id="copy-spec-btn" class="btn btn-xs btn-outline-light py-0 px-2 small">Copy JSON</button>
+              </div>
+              <pre id="playground-spec-output" class="mb-0 text-light small">// Spec will appear here...</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 4: SAMPLES FOLDER EXPLORER             -->
+    <!-- ============================================== -->
+    <section id="samples" class="mb-5 pb-4">
+      <div class="text-center max-w-3xl mx-auto mb-5">
+        <span class="badge-pill badge-primary-soft mb-2">Repository Samples</span>
+        <h2 class="h2 fw-bold text-dark mb-2">Sample Folder Overview</h2>
+        <p class="text-secondary">
+          The <code class="font-mono text-dark">samples/</code> directory contains working implementations testing
+          different component types and real-world integration patterns.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Sample: Table -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-primary-soft">Table Spec</span>
+                <span class="text-muted small font-mono">samples/table/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">📊 Table Component Sample</h3>
+              <p class="text-secondary small mb-3">
+                Demonstrates generating a table with custom column widths, batch item records, and compiling via <code
+                  class="font-mono text-dark">type: "tableFromSpec"</code>.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/table/index.html" target="_blank"
+                class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample: Form -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-emerald-soft">Vertical Form</span>
+                <span class="text-muted small font-mono">samples/form/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">📝 Vertical Form with Submit</h3>
+              <p class="text-secondary small mb-3">
+                Shows a column-driven Bootstrap form with name, email, role select, notes textarea, updates checkbox,
+                and captures live form submit events.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/form/index.html" target="_blank"
+                class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample: Search Input -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-blue-soft">Search Control</span>
+                <span class="text-muted small font-mono">samples/searchInput/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">🔍 Search Input & Button</h3>
+              <p class="text-secondary small mb-3">
+                Tests search inputs with customizable labels, placeholders, input IDs, and attached search action
+                buttons.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/searchInput/index.html" target="_blank"
+                class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample: Select -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-purple-soft">Dropdown</span>
+                <span class="text-muted small font-mono">samples/select/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">🔽 Standalone Select Dropdown</h3>
+              <p class="text-secondary small mb-3">
+                Creates a full <code class="font-mono">&lt;select&gt;</code> element AST populated with <code
+                  class="font-mono">&lt;option&gt;</code> tags from an array of strings.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/select/index.html" target="_blank"
+                class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample: Options Only -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-amber-soft">Fragment</span>
+                <span class="text-muted small font-mono">samples/selectOptionsOnly/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">⚡ Options Only Fragment</h3>
+              <p class="text-secondary small mb-3">
+                Useful when you already have an existing <code class="font-mono">&lt;select&gt;</code> in HTML and only
+                need to generate the dynamic <code class="font-mono">&lt;option&gt;</code> children to append to it.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/selectOptionsOnly/index.html" target="_blank"
+                class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample: v4 Modal on Row Click -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="badge-pill badge-primary-soft">Interactive</span>
+                <span class="text-muted small font-mono">samples/v4/</span>
+              </div>
+              <h3 class="h6 fw-bold text-dark mb-2">🪟 Modal Dialog on Row Click</h3>
+              <p class="text-secondary small mb-3">
+                Advanced demonstration where clicking an action button on a table row dynamically compiles and renders a
+                child batches table inside a Bootstrap modal.
+              </p>
+            </div>
+            <div>
+              <a href="../samples/v4/table.html" target="_blank" class="btn btn-sm btn-outline-primary w-100 fw-medium">
+                View Sample &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 5: QUICK START & USAGE CHEATSHEET      -->
+    <!-- ============================================== -->
+    <section id="quickstart" class="mb-5 pb-4">
+      <div class="text-center max-w-3xl mx-auto mb-5">
+        <span class="badge-pill badge-primary-soft mb-2">Developer Cheatsheet</span>
+        <h2 class="h2 fw-bold text-dark mb-2">Quick Start & Installation</h2>
+        <p class="text-secondary">
+          Ready to use <code class="font-mono text-dark">json-renderers-build</code> in your project? Follow these quick
+          steps.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Install via NPM -->
+        <div class="col-md-6">
+          <div class="doc-card p-4 h-100">
+            <h3 class="h6 fw-bold text-dark mb-2">1. Install via NPM</h3>
+            <p class="text-secondary small mb-3">Install into your Node.js or bundler project:</p>
+            <div class="code-container font-mono mb-3">
+              npm install json-renderers-build
+            </div>
+            <p class="text-secondary small mb-2">Use in ES module code:</p>
+            <div class="code-container font-mono small">
+              import render from "json-renderers-build";<br><br>
+              const spec = render({<br>
+              &nbsp;&nbsp;type: "table",<br>
+              &nbsp;&nbsp;columns: [{ columnName: "Name" }],<br>
+              &nbsp;&nbsp;data: [{ Name: "Acme Corp" }]<br>
+              });
+            </div>
+          </div>
+        </div>
+
+        <!-- Load via CDN -->
+        <div class="col-md-6">
+          <div class="doc-card p-4 h-100">
+            <h3 class="h6 fw-bold text-dark mb-2">2. Load in Browser via CDN</h3>
+            <p class="text-secondary small mb-3">Use directly in any HTML file without build tools:</p>
+            <div class="code-container font-mono small mb-3">
+              &lt;script type="module"&gt;<br>
+              &nbsp;&nbsp;import render from
+              "https://cdn.jsdelivr.net/gh/keshavsoft/json-renderers-build@main/docs/dist/v22/min.js";<br>
+              &nbsp;&nbsp;import "https://keshavsoft.github.io/json-to-tag/dist/v9/min.js";<br><br>
+              &nbsp;&nbsp;const spec = render({<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;type: "select",<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;data: ["Retail", "Wholesale", "Export"]<br>
+              &nbsp;&nbsp;});<br><br>
+              &nbsp;&nbsp;const element = window.ks.jsonToTag.buildSpecElement(spec);<br>
+              &nbsp;&nbsp;document.getElementById("container").replaceChildren(element);<br>
+              &lt;/script&gt;
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Clean Footer -->
+  <footer class="border-top bg-surface py-4 mt-5">
+    <div
+      class="container-xl d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3 text-muted small">
+      <div>
+        <strong>json-renderers-build</strong> &bull; Part of the KeshavSoft Declarative UI Ecosystem &bull; MIT License
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a href="#top" class="text-muted text-decoration-none hover-dark">Back to top ↑</a>
+        <a href="https://github.com/keshavsoft/json-renderers-build" class="text-muted text-decoration-none hover-dark"
+          target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://keshavsoft.github.io/json-renderers-build/" class="text-muted text-decoration-none hover-dark"
+          target="_blank" rel="noopener noreferrer">Live Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Load dependencies: json-to-tag from CDN and local json-renderers-build -->
+  <script type="module">
+    import "https://keshavsoft.github.io/json-to-tag/dist/v9/min.js";
+
+    // Detect if we are in /docss/ or /docs/
+    const isDocss = window.location.pathname.includes('/docss');
+    const bundlePath = isDocss ? "../docs/dist/v22/min.js" : "./dist/v22/min.js";
+
+    let renderFunc = null;
+
+    try {
+      const module = await import(bundlePath);
+      renderFunc = module.default || module.render;
+    } catch (err) {
+      console.warn("Could not load relative bundle, checking global window.ks:", err);
+      renderFunc = window.ks?.jsonRenderersBuild?.render;
+    }
+
+    // Playground Data Configurations
+    const PLAYGROUND_CONFIGS = {
+      table: {
+        title: "Table Specification",
+        desc: "Generates full <table>, <thead>, <tbody>, rows, and cells AST with standard Bootstrap classes.",
+        sampleLink: "../samples/table/index.html",
+        config: {
+          type: "table",
+          columns: [
+            { columnName: "id", width: "15%" },
+            { columnName: "name", width: "45%" },
+            { columnName: "city", width: "40%" }
+          ],
+          data: [
+            { id: 101, name: "Alpha Technologies", city: "Hyderabad" },
+            { id: 102, name: "Beta Logistics", city: "Bengaluru" },
+            { id: 103, name: "Gamma Retailers", city: "Chennai" }
+          ]
+        }
+      },
+      form: {
+        title: "Vertical Form Specification",
+        desc: "Compiles a column definition schema into an accessible Bootstrap vertical form with inputs and submit button.",
+        sampleLink: "../samples/form/index.html",
+        config: {
+          type: "form",
+          columns: [
+            { columnName: "FullName", type: "text", label: "Full Name", placeholder: "e.g. John Doe", required: true },
+            { columnName: "WorkEmail", type: "email", label: "Work Email", placeholder: "john@example.com", required: true },
+            { columnName: "Category", type: "select", label: "Inquiry Type", options: ["General Support", "Billing", "Partnership"] },
+            { columnName: "Message", type: "textarea", label: "Your Message", placeholder: "How can we help?" }
+          ],
+          data: [
+            { FullName: "John Doe", WorkEmail: "john@example.com", Category: "General Support", Message: "Inquiry regarding json-renderers-build." }
+          ],
+          options: {
+            formId: "demo-contact-form",
+            submitLabel: "Send Inquiry"
+          }
+        }
+      },
+      searchInput: {
+        title: "Search Input Specification",
+        desc: "Generates a clean search control row with customizable labels, placeholders, and action buttons.",
+        sampleLink: "../samples/searchInput/index.html",
+        config: {
+          type: "searchInput",
+          data: [],
+          options: {
+            label: "Search Database:",
+            placeholder: "Search items, batches, invoices...",
+            id: "playground-search-input",
+            class: "form-control"
+          }
+        }
+      },
+      select: {
+        title: "Standalone Select Dropdown",
+        desc: "Generates a full <select> element populated with child <option> elements from an array.",
+        sampleLink: "../samples/select/index.html",
+        config: {
+          type: "select",
+          data: ["Retail Customer", "Wholesale Distributor", "Export Client", "Government Agency"]
+        }
+      },
+      selectOptionsOnly: {
+        title: "Select Options Fragment Only",
+        desc: "Generates an array fragment of <option> elements designed to inject into existing select tags.",
+        sampleLink: "../samples/selectOptionsOnly/index.html",
+        config: {
+          type: "selectOptionsOnly",
+          data: ["Finance & Accounting", "Human Resources", "Information Technology", "Sales & Marketing"]
+        }
+      }
+    };
+
+    let currentComponent = "table";
+    let lastCompiledSpec = null;
+
+    const updateDisplay = () => {
+      const activeData = PLAYGROUND_CONFIGS[currentComponent];
+      if (!activeData) return;
+
+      document.getElementById("active-component-title").textContent = activeData.title;
+      document.getElementById("active-component-desc").textContent = activeData.desc;
+      document.getElementById("sample-source-link").setAttribute("href", activeData.sampleLink);
+
+      document.getElementById("input-config-display").textContent = JSON.stringify(activeData.config, null, 2);
+    };
+
+    const runCompilation = () => {
+      const activeData = PLAYGROUND_CONFIGS[currentComponent];
+      if (!activeData || !renderFunc) {
+        document.getElementById("playground-dom-container").innerHTML =
+          `<div class="alert alert-warning small">Renderer function not yet initialized.</div>`;
+        return;
+      }
+
+      try {
+        // Step 1: Headless AST Compilation
+        const spec = renderFunc(activeData.config);
+        lastCompiledSpec = spec;
+
+        // Display Spec AST JSON
+        document.getElementById("playground-spec-output").textContent = JSON.stringify(spec, null, 2);
+
+        // Step 2: DOM Instantiation via json-to-tag
+        const container = document.getElementById("playground-dom-container");
+        if (window.ks?.jsonToTag?.buildSpecElement) {
+          const domElement = window.ks.jsonToTag.buildSpecElement(spec);
+          if (domElement) {
+            container.replaceChildren(...(Array.isArray(domElement) ? domElement : [domElement]));
+          } else {
+            container.innerHTML = `<span class="text-muted small">Spec built, but no DOM element returned.</span>`;
+          }
+        } else {
+          container.innerHTML = `<div class="alert alert-info small font-mono">Spec generated successfully! To mount DOM nodes, ensure json-to-tag is available.</div>`;
+        }
+
+      } catch (err) {
+        console.error("Playground compilation error:", err);
+        document.getElementById("playground-dom-container").innerHTML =
+          `<div class="alert alert-danger small font-mono">Error: ${err.message}</div>`;
+      }
+    };
+
+    // Tab buttons event listeners
+    document.querySelectorAll("#component-tabs [data-component]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("#component-tabs [data-component]").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        currentComponent = button.getAttribute("data-component");
+        updateDisplay();
+        runCompilation();
+      });
+    });
+
+    // Run compile button
+    document.getElementById("run-compile-btn").addEventListener("click", runCompilation);
+
+    // View sub-tabs: Live DOM vs Spec AST
+    const viewDomTab = document.getElementById("view-dom-tab");
+    const viewSpecTab = document.getElementById("view-spec-tab");
+    const liveDomView = document.getElementById("live-dom-view");
+    const specAstView = document.getElementById("spec-ast-view");
+
+    viewDomTab.addEventListener("click", () => {
+      viewDomTab.classList.add("active");
+      viewSpecTab.classList.remove("active");
+      liveDomView.classList.remove("d-none");
+      specAstView.classList.add("d-none");
+    });
+
+    viewSpecTab.addEventListener("click", () => {
+      viewSpecTab.classList.add("active");
+      viewDomTab.classList.remove("active");
+      specAstView.classList.remove("d-none");
+      liveDomView.classList.add("d-none");
+    });
+
+    // Copy Spec AST button
+    document.getElementById("copy-spec-btn").addEventListener("click", () => {
+      if (!lastCompiledSpec) return;
+      navigator.clipboard.writeText(JSON.stringify(lastCompiledSpec, null, 2)).then(() => {
+        const btn = document.getElementById("copy-spec-btn");
+        const orig = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = orig, 1500);
+      });
+    });
+
+    // Initial run
+    updateDisplay();
+    runCompilation();
+  </script>
+</body>
+
+</html>

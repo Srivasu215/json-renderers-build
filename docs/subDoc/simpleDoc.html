@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>json-renderers-build - Simple Guide</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.6 Arial, sans-serif;
+      background: #f4f7fb;
+      color: #263238;
+    }
+
+    header {
+      background: #174ea6;
+      color: white;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    section {
+      background: white;
+      padding: 18px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #174ea6;
+      margin-top: 0;
+    }
+
+    .story {
+      background: #edf4ff;
+      border-left: 4px solid #174ea6;
+      padding: 10px 14px;
+      margin: 10px 0;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step {
+      background: #e7f0ff;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    pre {
+      overflow-x: auto;
+      background: #17212b;
+      color: #f5f7fa;
+      padding: 14px;
+      border-radius: 8px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    a {
+      color: #174ea6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      color: #607080;
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+
+    <h1 style="margin:0 0 6px 0;">json-renderers-build</h1>
+    <p style="margin:0; opacity:0.9;">A simple guide to preparing JSON UI specifications</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. What Does It Do?</h2>
+      <p><b>json-renderers-build</b> is a headless specification compiler in the KeshavSoft declarative UI ecosystem.
+      </p>
+      <p>It accepts a component type, data, and columns, then returns a JSON description of the requested UI. It does
+        not create live DOM elements.</p>
+    </section>
+    <section>
+      <h2>2. A Simple House-Building Story</h2>
+      <div class="story"><b>json-renderers-build — The Architect</b>
+        <p>Chooses a component blueprint and prepares a JSON plan for the table, dropdown, or other supported UI.</p>
+      </div>
+      <div class="story"><b>json-transformer-funcs — The Helper Team</b>
+        <p>Functions such as <code>fromCollection()</code> turn lists of data into lists of JSON element descriptions
+          based on templates.</p>
+      </div>
+      <div class="story"><b>json-to-tag — The Construction Worker</b>
+        <p>Reads the JSON element descriptions and creates real browser DOM elements.</p>
+      </div>
+      <div class="story"><b>json-renderers — The Site Manager</b>
+        <p>Mounts the generated elements in the correct webpage container.</p>
+      </div>
+      <p>These are story roles to make each repository responsibility easy to remember.</p>
+    </section>
+    <section>
+      <h2>3. How They Work Together</h2>
+      <div class="flow"><span class="step">Data + Columns</span><b>→</b><span class="step">Build
+          Specification</span><b>→</b><span class="step">Create DOM</span><b>→</b><span class="step">Mount on
+          Page</span></div>
+      <ol>
+        <li>The application supplies data and a component type.</li>
+        <li><code>json-renderers-build</code> uses blueprints and <code>json-to-spec</code> to return a JSON
+          specification AST.</li>
+        <li>Reusable helpers from <code>json-transformer-funcs</code>, such as <code>fromCollection()</code>, can
+          transform data collections into JSON element descriptions in relevant builders.</li>
+        <li><code>json-to-tag</code> creates the real DOM; <code>json-renderers</code> mounts it into the webpage.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>4. Example: Build a Table Specification</h2>
+      <pre><code>import render from "json-renderers-build";
+const records = [
+  { name: "Ravi", city: "Kakinada" },
+  { name: "Sita", city: "Visakhapatnam" }
+];
+const spec = render({
+  type: "table",
+  data: records,
+  columns: [{ title: "Name" }, { title: "City" }]
+});
+console.log(spec);</code></pre>
+      <p>The result is a JSON UI specification, not a rendered HTML table.</p>
+    </section>
+    <section>
+      <h2>5. Supported Component Types</h2>
+      <ul>
+        <li><code>table</code> — describes a table with headers and data cells.</li>
+        <li><code>select</code> — describes a dropdown with option elements.</li>
+        <li><code>selectOptionsOnly</code> — describes options for an existing dropdown.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>6. The Important Difference</h2>
+      <p><b>json-renderers-build:</b> prepares the JSON UI specification.</p>
+      <p><b>json-transformer-funcs:</b> provides reusable data-to-JSON transformation helpers.</p>
+      <p><b>json-to-tag:</b> creates real DOM elements from JSON descriptions.</p>
+      <p><b>json-renderers:</b> mounts those elements into the webpage.</p>
+    </section>
+    <section>
+      <h2>7. Official Documentation</h2>
+      <p><a href="https://github.com/keshavsoft/json-renderers-build">json-renderers-build repository</a></p>
+      <p><a href="https://github.com/keshavsoft/json-transformer-funcs">json-transformer-funcs repository</a></p>
+      <p><a href="https://github.com/keshavsoft/json-renderers">json-renderers</a> · <a
+          href="https://github.com/keshavsoft/json-to-tag">json-to-tag</a></p>
+      <p><a href="https://keshavsoft.github.io/json-renderers-build/">Live documentation</a></p>
+    </section>
+  </main>
+  <footer>Simple guide based on the repository README documentation.</footer>
+  <p><b>Why separate the steps?</b> The JSON specification can be created without a browser DOM.</p>
+  <p>This makes specification building easier to test and reuse in different JavaScript environments.</p>
+  <p>For a dropdown, the template defines an option shape and the data supplies each option value.</p>
+  <p>For a table, the specification describes the table container, headings, rows, and cells.</p>
+  <p>The next stages consume the specification; they are responsible for actual DOM creation and mounting.</p>
+  <p>Use the repository README for version-specific APIs and setup instructions.</p>
+  <p>Simple flow: prepare the plan first, create the elements second, and place them last.</p>
+</body>
+
+</html>
