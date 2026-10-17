@@ -1,4 +1,4 @@
-import render from "../../docs/dist/v21/min.js";
+import render from "../../docs/dist/v22/min.js";
 
 const runTest = ({ inType = "searchInput", inOptions = {} } = {}) => {
   const localType = inType;
